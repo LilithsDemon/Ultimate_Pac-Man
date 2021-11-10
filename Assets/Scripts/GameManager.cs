@@ -4,7 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public Ghost[] ghosts;
 
-    public Pacman pacman;
+    public charMovementController pacman;
     public  Vector2 pacmanStartingPos = new Vector2(0.5f, -8.5f);
 
     public Transform pellets;
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int score {get; private set;}
     public int lives {get; private set;}
 
-    public float totalTime {get; private set;} = 120f;
+    public float totalTime = 120f;
     private float currentTime;
     public int currentMins {get; private set;} = 0;
     public int currentSecs {get; private set;} = 0;
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     private void NewRound()
     {
         ResetState();
-        refreshPellets();
+        RefreshPellets();
         this.round = this.round + 1;
         FindObjectOfType<UiManager>().RoundText.text = "Round: " + this.round;
     }
@@ -80,15 +80,6 @@ public class GameManager : MonoBehaviour
         this.pacman.gameObject.SetActive(true);
         ResetGhostMultiplier();
         currentTime = totalTime;
-    }
-
-    private void refreshPellets()
-    {
-        foreach(Transform pellet in this.pellets)
-        {
-            pellet.gameObject.SetActive(true);
-        }
-        
     }
 
     private void GameOver()
@@ -137,16 +128,17 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingPellets())
         {
-            Invoke(nameof(refreshPellets), 1.5f);
+            Invoke(nameof(RefreshPellets), 1.5f);
         }
     }
 
     public void PowerPelletEaten(PowerPellet pellet)
     {
         PelletEaten(pellet);
+        //In case one is already on
         CancelInvoke();
+        //Eats a powerPellet
         Invoke(nameof(ResetGhostMultiplier), pellet.duration);
-        
     }
 
     private bool HasRemainingPellets()
@@ -155,11 +147,21 @@ public class GameManager : MonoBehaviour
         {
             if(pellet.gameObject.activeSelf)
             {
+                //If a single pellet is found
                 return true;
             }
         }
-
+        //If no active pellets foudn
         return false;
+    }
+
+    private void RefreshPellets()
+    {
+        foreach(Transform pellet in this.pellets)
+        {
+            //Sets all pellets to active
+            pellet.gameObject.SetActive(true);
+        }
     }
 
     private void ResetGhostMultiplier()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 
-public class Pacman : MonoBehaviour
+public class charMovementController : MonoBehaviour
 {
 
     public Movement movement {get; private set; }
@@ -20,6 +20,8 @@ public class Pacman : MonoBehaviour
 
     private void Update()
     {
+
+        //Logic to get the right direction using keyboard
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.movement.SetDirection(Vector2.up);
@@ -37,6 +39,7 @@ public class Pacman : MonoBehaviour
             this.movement.SetDirection(Vector2.right);
         }
 
+        //Logic tog et direction using touch
         if (Input.touchCount > 0)
         {
             theTouch = Input.GetTouch(0);
