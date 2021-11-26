@@ -6762,8 +6762,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghosts: []
-  pacman: {fileID: 1672983448}
   pacmanStartingPos: {x: 0.5, y: -8.5}
+  playerPrefab: {fileID: 0}
+  pelletPrefab: {fileID: 0}
   pellets: {fileID: 1298681298}
   totalTime: 20
 --- !u!1 &1130213257
@@ -10575,6 +10576,7 @@ GameObject:
   - component: {fileID: 1672983448}
   - component: {fileID: 1672983449}
   - component: {fileID: 1672983450}
+  - component: {fileID: 1672983451}
   m_Layer: 6
   m_Name: Pacman
   m_TagString: Untagged
@@ -10697,7 +10699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5295771709c14b9b3b114bc5ce3cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionImage: {fileID: 237686720}
+  view: {fileID: 0}
 --- !u!114 &1672983449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10731,10 +10733,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   speedMultiplier: 1
-  initialDirection: {x: 1, y: 0}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
+  initialDirection: {x: 1, y: 0}
+--- !u!114 &1672983451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672983443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22c816bfa357a7749692a2223a6bb2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1858984777
 GameObject:
   m_ObjectHideFlags: 0

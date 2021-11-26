@@ -7,7 +7,37 @@ public class MenuUi : MonoBehaviour
 {
     public Animator shopMenu;
     public Animator playMenu;
+    public Animator accountMenu;
+
     private bool playMenuOpen = false;
+    private bool accountMenuOpen = false;
+
+    public Text coinText;
+
+    public InputField nameInput;
+
+    public void Start()
+    {
+        nameInput.text = FindObjectOfType<SaveManager>().Name();
+        coinText.text = FindObjectOfType<SaveManager>().Coins().ToString();
+    }
+
+    public void OpenAccountMenu()
+    {
+        accountMenu.SetTrigger("OpenMenu");
+        accountMenuOpen = false;
+    }
+
+    public void CloseAccountMenu()
+    {
+        accountMenu.SetTrigger("CloseMenu");
+        accountMenuOpen = true;
+    }
+
+    public void UpdatePlayerSettings()
+    {
+        FindObjectOfType<SaveManager>().SetName(nameInput.text);
+    }
 
     public void OpenPlayMenu()
     {
@@ -31,6 +61,11 @@ public class MenuUi : MonoBehaviour
     }
 
     public void StartGame()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    public void Multiplayer()
     {
         SceneManager.LoadScene(1);
     }

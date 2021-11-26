@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 62423996ecc07719391c9d10cb494a4d
   - enabled: 1
-    path: Assets/Scenes/Pacman.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Loading.unity
+    guid: b8e1fa00d25eddfc48e7cc26e45dba77
+  - enabled: 1
+    path: Assets/Scenes/RoomJoiner.unity
+    guid: 03ebe9c86013c8f1297b09e438e169f8
+  - enabled: 1
+    path: Assets/Scenes/newPacman.unity
+    guid: af83a3611b50bf821b442b1582cd2f50
   m_configObjects: {}
