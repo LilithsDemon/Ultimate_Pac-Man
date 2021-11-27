@@ -12,14 +12,14 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = "Score: " + FindObjectOfType<GameManager>().score;
-        timeText.text = string.Format("Time: {0:0}:{1:00}", FindObjectOfType<GameManager>().currentMins, FindObjectOfType<GameManager>().currentSecs);
-        playerValueText.text = ("Player Value: " + Convert.ToString(FindObjectOfType<PlayerManager>().charVal));
+        scoreText.text = "score: " + FindObjectOfType<GameManager>().score;
+        timeText.text = string.Format("time: {0:0}:{1:00}", FindObjectOfType<GameManager>().currentMins, FindObjectOfType<GameManager>().currentSecs);
+        playerValueText.text = ("player value: " + Convert.ToString(FindObjectOfType<PlayerManager>().charVal));
     }
 
     private void Start()
     {
-        playerValueText.text = ("Player Value: " + Convert.ToString(FindObjectOfType<PlayerManager>().charVal));
+        playerValueText.text = ("player value: " + Convert.ToString(FindObjectOfType<PlayerManager>().charVal));
     }
 
 }
