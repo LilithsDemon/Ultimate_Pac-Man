@@ -6864,6 +6864,7 @@ MonoBehaviour:
   ghosts: []
   pacmanStartingPos: {x: 0.5, y: -8.5}
   playerPrefab: {fileID: 4061310953083967663, guid: b1364b46aadfaecbe805f7245d17b28a, type: 3}
+  ghostPrefab: {fileID: 2958353804465712982, guid: 61dd5f51099d841b497c43a3318404f4, type: 3}
   pelletPrefab: {fileID: 4006614418794546906, guid: fc154d73b6f5bfb8582715abcdf3de3d, type: 3}
   pellets: {fileID: 1298681298}
   totalTime: 20

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Vector2 pacmanStartingPos = new Vector2(0.5f, -8.5f);
 
     public GameObject playerPrefab;
+    public GameObject ghostPrefab;
 
     public GameObject pelletPrefab;
 
@@ -32,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, pacmanStartingPos, Quaternion.identity);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonView pV = this.GetComponent<PhotonView>();
@@ -48,6 +48,13 @@ public class GameManager : MonoBehaviour
         byte charValue = freeValues[value];
         freeValues.RemoveAt(value);
         FindObjectOfType<PlayerManager>().SetChar(charValue);
+        if (FindObjectOfType<PlayerManager>().charVal == 0)
+        {
+            GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, pacmanStartingPos, Quaternion.identity);
+        }else
+        {
+            GameObject player = PhotonNetwork.Instantiate(ghostPrefab.name, pacmanStartingPos, Quaternion.identity);
+        }
     }
 
     private void Update()
