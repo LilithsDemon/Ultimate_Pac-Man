@@ -15,6 +15,7 @@ public class UiManager : MonoBehaviour
         scoreText.text = "score: " + FindObjectOfType<GameManager>().score;
         timeText.text = string.Format("time: {0:0}:{1:00}", FindObjectOfType<GameManager>().currentMins, FindObjectOfType<GameManager>().currentSecs);
         playerValueText.text = ("player value: " + Convert.ToString(FindObjectOfType<PlayerManager>().charVal));
+        roundText.text = ("round: " + Convert.ToString(FindObjectOfType<GameManager>().round));
     }
 
     private void Start()

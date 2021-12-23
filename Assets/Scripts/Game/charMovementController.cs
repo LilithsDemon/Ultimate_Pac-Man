@@ -12,8 +12,7 @@ public class charMovementController : MonoBehaviour
     private Vector2 touchEndPosition;
     private Vector2 direction;
 
-
-    public PhotonView view;
+    PhotonView view;
 
     private void Awake()
     {
@@ -63,7 +62,6 @@ public class charMovementController : MonoBehaviour
 
                     if (Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0)
                     {
-                        direction = direction;
                     }
 
                     else if (Mathf.Abs(x) > Mathf.Abs(y))

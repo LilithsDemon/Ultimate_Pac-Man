@@ -10,7 +10,6 @@ public class MenuUi : MonoBehaviour
     public Animator accountMenu;
 
     private bool playMenuOpen = false;
-    private bool accountMenuOpen = false;
 
     public Text coinText;
 
@@ -25,13 +24,11 @@ public class MenuUi : MonoBehaviour
     public void OpenAccountMenu()
     {
         accountMenu.SetTrigger("OpenMenu");
-        accountMenuOpen = false;
     }
 
     public void CloseAccountMenu()
     {
         accountMenu.SetTrigger("CloseMenu");
-        accountMenuOpen = true;
     }
 
     public void UpdatePlayerSettings()

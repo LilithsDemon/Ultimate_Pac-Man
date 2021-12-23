@@ -15,6 +15,7 @@ namespace Photon.Pun
     using UnityEngine;
     using System;
     using System.Linq;
+    using System.Collections;
     using System.Collections.Generic;
     using ExitGames.Client.Photon;
     using UnityEngine.SceneManagement;

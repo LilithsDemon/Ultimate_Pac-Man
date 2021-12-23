@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     //variable to hold the layer so the charactes will collide with this layer
     public LayerMask obstacleLayer;
 
-    public Rigidbody2D rigidbody { get; private set; }
+    public Rigidbody2D rigidBody { get; private set; }
 
     //Every varaible for direction and movement
     public Vector2 initialDirection;
@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     //Gets the starting position of the player
     private void Awake()
     {
-        this.rigidbody = GetComponent<Rigidbody2D>();
+        this.rigidBody = GetComponent<Rigidbody2D>();
         this.startingPos = this.transform.position;
     }
 
@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
         this.direction = this.initialDirection;
         this.nextDirection = Vector2.zero;
         this.transform.position = this.startingPos;
-        this.rigidbody.isKinematic = false;
+        this.rigidBody.isKinematic = false;
         this.enabled = true;
     }
 
@@ -62,11 +62,11 @@ public class Movement : MonoBehaviour
     //Updates the position of the character
     private void FixedUpdate()
     {
-        if (view.IsMine)
+        if (view.IsMine && FindObjectOfType<GameManager>().paused == false)
         {
-            Vector2 position = this.rigidbody.position;
+            Vector2 position = this.rigidBody.position;
             Vector2 translation = this.direction * this.speed * this.speedMultiplier * Time.fixedDeltaTime;
-            this.rigidbody.MovePosition(position + translation);
+            this.rigidBody.MovePosition(position + translation);
             if (this.nextDirection != Vector2.zero)
             {
                 SetDirection(this.nextDirection);
