@@ -9,7 +9,6 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
-        //ResetSave();
         DontDestroyOnLoad(gameObject);
         Instance = this;
         Load();
@@ -60,5 +59,46 @@ public class SaveManager : MonoBehaviour
             state.coins = 0;
         }
         Save();
+    }
+
+    public int CurrentSkin(int character)
+    {
+        return (state.currentSkins[character]);
+    }
+
+    public void ChangeCurrentSkin(int charVal, int index)
+    {
+        state.currentSkins[charVal] = index;
+        Save();
+    }
+
+    public bool IsSkinOwned(int charVal, int index)
+    {
+        return(state.skinsOwned[charVal] & (1 << index)) != 0;
+    }
+
+    public bool BuySkin(int charVal, int index, int cost)
+    {
+        if (state.coins >= cost)
+        {
+            state.coins -= cost;
+            UnlockSkin(charVal, index);
+
+            Save();
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+
+    public void UnlockSkin(int charVal, int index)
+    {
+        state.skinsOwned[charVal] |= 1 << index;
+    }
+
+    public void ResetSave()
+    {
+        PlayerPrefs.DeleteKey("save");
     }
 }

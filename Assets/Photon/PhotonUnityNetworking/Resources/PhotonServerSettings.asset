@@ -45,6 +45,12 @@ MonoBehaviour:
   - NewRound
   - TakeAwayTime
   - UpdateTime
+  - SetColour
+  - AddGhost
+  - ChangeGhost
+  - ChangeGhostColour
+  - ChangeGhostStart
+  - SpawnPowerPellet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

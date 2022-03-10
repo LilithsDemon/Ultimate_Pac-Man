@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject pacmanPrefab;
     public GameObject ghostPrefab;
-
     public GameObject pelletPrefab;
+    public GameObject powerPelletPrefab;
     public Transform pellets;
 
     public Animator roundAnimator;
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     private GameObject player;
 
     public int ghostMultiplier {get; private set;} = 1;
-
     public int score {get; private set;}
     public int roundScore {get; private set;}
 
@@ -38,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     public float totalPauseTime = 14f;
     public float currentPauseTime;
-
     public bool paused = true;
 
     public int round {get; private set;} = 1;
@@ -90,7 +88,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        pV.RPC("updateList", RpcTarget.All, tmpArray);
+        pV.RPC("updateList", RpcTarget.Others, tmpArray);
         //Sets value and creates player characters
         FindObjectOfType<PlayerManager>().SetChar(charValue);
         InstantiateChars();
@@ -127,8 +125,6 @@ public class GameManager : MonoBehaviour
             pV.RPC("NewRound", RpcTarget.All);
         }
         pV.RPC("UpdateTime", RpcTarget.All, this.currentTime, this.currentPauseTime);
-        this.currentMins = Mathf.FloorToInt(this.currentTime / 60);
-        this.currentSecs = Mathf.FloorToInt(this.currentTime % 60);
     }
 
     private void ChangeChar()
@@ -146,9 +142,19 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ghostPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[tmpCharVal - 1];
             player = PhotonNetwork.Instantiate(ghostPrefab.name, playerStartingPos[tmpCharVal], Quaternion.identity);
+            if (pV.IsMine)
+            {
+                pV.RPC("ChangeGhostColour", RpcTarget.All, (tmpCharVal - 1));
+            }
+            
         }
+    }
+
+    [PunRPC]
+    public void ChangeGhostColour(int ghostVal)
+    {
+        player.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[ghostVal];
     }
 
     private void Update()
@@ -165,6 +171,7 @@ public class GameManager : MonoBehaviour
         {
             pauseTimeText.SetActive(false);
         }
+        pV.RPC("ChangeGhostColour", RpcTarget.All, (FindObjectOfType<PlayerManager>().charVal - 1));
     }
 
     private void NewGame()
@@ -191,23 +198,36 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(LeaveGame), 8f);
         }
         roundAnimator.SetTrigger("EndRound");
+        player.SetActive(false);
         ActivateUIChar();
         Invoke(nameof(ResetState), 3.4f);
-        Invoke(nameof(ActivateUIChar), 3.5f);
+        Invoke(nameof(ActivateUIChar), 4f);
         FindObjectOfType<PlayerManager>().IncrementChar();
         ChangeChar();
         this.round = this.round + 1;
         this.roundScore = 0;
     }
 
+    [PunRPC]
+    private void SpawnPowerPellet(int pelletVal)
+    {
+        //Make the pellet if it is active
+
+        //Instantaite powerpellet in the position
+        
+        //Play the animaition
+    }
+
     public void ActivateMainUI()
     {
+        player.SetActive(true);
         mainUI.SetActive(true);
     }
 
     public void ActivateUIChar()
     {
-        if (FindObjectOfType<PlayerManager>().charVal == 0)
+        int tmpCharVal = FindObjectOfType<PlayerManager>().charVal;
+        if (tmpCharVal == 0)
         {
             pacmanUI.SetActive(true);
             ghostUI.SetActive(false);
@@ -215,6 +235,7 @@ public class GameManager : MonoBehaviour
         else
         {
             pacmanUI.SetActive(false);
+            ghostUI.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().color = colors[tmpCharVal - 1];
             ghostUI.SetActive(true);
         }
     }
@@ -243,7 +264,7 @@ public class GameManager : MonoBehaviour
         this.currentTime = this.totalTime;
     }
 
-    private void AddToScore(int points)
+    public void AddToScore(int points)
     {
         this.score = this.score + points;
         this.roundScore = this.roundScore + points;
@@ -260,6 +281,7 @@ public class GameManager : MonoBehaviour
         if (pellet.gameObject.transform.localScale.x > 0.9f && paused == false)
         {
             pellet.gameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            pellet.gameObject.SetActive(false);
             if (FindObjectOfType<PlayerManager>().charVal == 0)
             {
                 AddToScore(pellet.points);
@@ -300,6 +322,7 @@ public class GameManager : MonoBehaviour
         foreach(Transform pellet in this.pellets)
         {
             //Sets all pellets to active
+            pellet.gameObject.SetActive(true);
             pellet.GetChild(0).gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
